@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="X2Bike × Your Agency">
+<meta property="og:description" content="Instagram, сайт и план на первый месяц для Праги и Варшавы">
+<meta property="og:image" content="https://osho4753.github.io/x2bike/img/cover.jpg">
+<title>X2Bike: Instagram, сайт и план</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  /* Layout: разбор как сторис в Instagram. Одна карточка = одна мысль, листается тапом, свайпом и стрелками.
+     Единый тёмный мир бренда Your Agency: moss-фон, органические пятна, зерно, молочный текст. */
+  :root {
+    color-scheme: dark;
+    --moss: #010020; --forest: #0f0e3a; --sage: #3a3963; --teal: #ce1212; --milk: #f6f6f6; --paper: #e9e9ee; --ink: #010020;
+    --milk-dim: rgba(246, 246, 246, 0.72); --line: rgba(246, 246, 246, 0.18);
+    /* их цвета, снятые с аватарки и сетки */
+    --pf-ball: #ff3b30;
+    --sans: "Golos Text", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Golos Text", "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  html, body { height: 100%; }
+  /* страница вокруг сторис светлая (paper из брендбука), чтобы тёмная карточка на ней читалась отдельным объектом */
+  body { background: var(--paper); color: var(--milk); font-family: var(--sans); overflow: hidden; }
+  .bg { position: fixed; inset: 0; pointer-events: none; }
+  .bg i { position: absolute; display: block; border-radius: 46% 54% 40% 60% / 55% 40% 60% 45%; }
+  .bg i:nth-child(1) { width: 70vmax; height: 70vmax; left: -26vmax; top: 44vh; background: var(--sage); opacity: 0.35; }
+  .bg i:nth-child(2) { width: 34vmax; height: 34vmax; right: -12vmax; top: -14vmax; background: var(--forest); opacity: 0.22; }
+  .bg i:nth-child(3) { width: 18vmax; height: 18vmax; right: 6vw; bottom: -7vmax; background: var(--teal); opacity: 0.3; }
+  .grain { position: fixed; inset: 0; pointer-events: none; opacity: 0.12; mix-blend-mode: multiply; z-index: 40;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='7'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>"); }
+
+  .stage { position: relative; height: 100%; display: grid; place-items: center;
+    padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .deck { position: relative; width: min(440px, 100%); height: min(880px, 100%); border-radius: 28px; overflow: hidden;
+    background: var(--moss); box-shadow: 0 30px 80px rgba(1, 0, 32, 0.28); touch-action: pan-y; user-select: none; }
+  .bars { position: absolute; z-index: 20; left: 14px; right: 14px; top: 12px; display: flex; gap: 4px; }
+  .bars span { flex: 1; height: 3px; border-radius: 2px; background: rgba(246, 246, 246, 0.28); overflow: hidden; }
+  .bars span b { display: block; height: 100%; width: 0; background: var(--milk); transition: width 0.35s ease; }
+  .bars span.done b { width: 100%; }
+  .who { position: absolute; z-index: 20; left: 14px; right: 14px; top: 24px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
+  .who img { width: 30px; height: 30px; border-radius: 50%; box-shadow: 0 0 0 2px var(--milk); }
+  .who small { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; margin-left: auto; }
+
+  .slide { position: absolute; inset: 0; padding: 78px 22px 26px; display: flex; flex-direction: column; gap: 16px;
+    isolation: isolate; opacity: 0; visibility: hidden; transform: translateX(14px); transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s; }
+  .slide.on { opacity: 1; visibility: visible; transform: none; }
+  .photo { position: absolute; inset: 0; z-index: -1; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(1, 0, 32, 0.55) 0%, rgba(1, 0, 32, 0.15) 38%, rgba(1, 0, 32, 0.92) 78%, var(--moss) 100%); }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--milk-dim); }
+  h1, h2 { margin: 0; font-family: "Golos Text", sans-serif; font-weight: 800; letter-spacing: -0.035em; line-height: 1.02; text-wrap: balance; }
+  h1 { font-size: min(42px, 10.5vw); } h2 { font-size: min(32px, 8vw); }
+  h1 em, h2 em { font-style: normal; color: #ff3b30; }
+  .sub { margin: 0; font-size: 16px; line-height: 1.45; color: var(--milk-dim); }
+  .push { margin-top: auto; }
+  .hint { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--milk-dim); display: flex; align-items: center; gap: 8px; }
+  .hint::after { content: "→"; font-family: var(--sans); font-size: 18px; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateX(6px); } }
+
+  .tap { position: absolute; top: 60px; bottom: 0; width: 30%; z-index: 10; cursor: pointer; }
+  .tap.prev { left: 0; } .tap.next { right: 0; }
+  .ui { position: relative; z-index: 12; }
+
+  /* 2 · большие числа */
+  .vs { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 10px; margin-top: 8px; }
+  .vs div { min-width: 0; }
+  .vs b { display: block; font-family: var(--serif); font-size: 60px; font-weight: 700; letter-spacing: -0.04em; line-height: 0.9; font-variant-numeric: tabular-nums; }
+  .vs span { font-size: 13px; color: var(--milk-dim); }
+  .vs .x { font-family: var(--serif); font-size: 26px; color: #ff3b30; padding-bottom: 14px; }
+  .meter { height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; }
+  .meter i { display: block; height: 100%; width: 23%; border-radius: 7px; background: var(--milk); transition: width 1s cubic-bezier(.2,.8,.2,1); }
+  .on .meter i.go { width: 100%; background: var(--pf-ball); }
+
+  /* 3 · интерактивный график */
+  .chart { background: rgba(0, 0, 0, 0.16); border-radius: 18px; padding: 14px 12px 10px; }
+  .chart svg { display: block; width: 100%; height: auto; }
+  .chart rect.bar { cursor: pointer; transition: opacity 0.2s; }
+  .pick { border-radius: 16px; background: var(--milk); color: var(--moss); padding: 14px 16px; display: grid; gap: 4px; min-height: 86px; }
+  .pick b { font-size: 17px; } .pick span { font-size: 14px; opacity: 0.8; }
+  .pick .m { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; }
+
+  /* 4 · что зашло: раскрывающиеся строки */
+  .acc { display: grid; gap: 8px; }
+  .acc button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; border-radius: 14px; padding: 12px 14px; background: rgba(1, 0, 32, 0.78);
+    box-shadow: inset 0 0 0 1px var(--line); display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; }
+  .acc button:focus-visible, .chip:focus-visible, .tab:focus-visible, .fcard:focus-visible, .seg button:focus-visible { outline: 2px solid var(--pf-ball); outline-offset: 2px; }
+  .acc .t { font-weight: 600; font-size: 16px; }
+  .acc .n { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--moss); background: var(--pf-ball); border-radius: 8px; padding: 3px 8px; }
+  .acc .n.low { background: var(--milk-dim); }
+  .acc .why { grid-column: 1 / -1; font-size: 14px; color: var(--milk-dim); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .acc button[aria-expanded="true"] .why { max-height: 90px; margin-top: 4px; }
+
+  /* 5 · мем в стиле бренда */
+  .meme { border-radius: 18px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; background: var(--milk); }
+  .meme .face { aspect-ratio: 1; background-image: url("img/drake_blank.jpg"); background-size: 200% 200%; background-position: 0 0; filter: saturate(0.55) sepia(0.15); }
+  .meme .face.yes { background-position: 0 100%; }
+  .meme .say { display: grid; place-items: center; padding: 10px; color: var(--moss); font-weight: 600; font-size: 17px; line-height: 1.15; text-align: center; }
+  .meme .say.no { text-decoration: line-through; text-decoration-color: rgba(1, 0, 32, 0.45); opacity: 0.75; }
+  .meme .say.yes em { font-style: normal; color: #ce1212; }
+
+  /* 6 · что мешает: карточки-флипы */
+  .chips { display: grid; gap: 10px; }
+  .chip { all: unset; box-sizing: border-box; cursor: pointer; border-radius: 16px; padding: 14px 16px; background: var(--paper); color: var(--ink); display: grid; gap: 4px; }
+  .chip .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; }
+  .chip .p { font-weight: 600; font-size: 17px; }
+  .chip .f { font-size: 14px; color: var(--forest); font-weight: 600; display: none; }
+  .chip[aria-pressed="true"] { background: var(--milk); }
+  .chip[aria-pressed="true"] .f { display: block; }
+  .chip[aria-pressed="true"] .k::after { content: " · как исправим"; }
+
+  /* 7 · их цвета */
+  .sw { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .sw div { border-radius: 14px; aspect-ratio: 0.8; padding: 8px; display: flex; flex-direction: column; justify-content: flex-end; box-shadow: inset 0 0 0 1px var(--line); }
+  .sw b { font-size: 12.5px; font-weight: 600; } .sw span { font-family: var(--mono); font-size: 10px; opacity: 0.75; }
+  .seg { display: inline-flex; background: rgba(0, 0, 0, 0.2); border-radius: 999px; padding: 4px; align-self: flex-start; }
+  .seg button { all: unset; cursor: pointer; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--milk-dim); }
+  .seg button[aria-pressed="true"] { background: var(--milk); color: var(--moss); }
+  .grid9 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border-radius: 12px; overflow: hidden; }
+  .grid9 div { aspect-ratio: 4 / 5; background-size: cover; background-position: center; display: grid; place-items: center; transition: background 0.35s, filter 0.35s; position: relative; }
+  .grid9 div span { font-weight: 700; font-size: 12px; letter-spacing: 0.02em; text-align: center; padding: 4px; }
+
+  /* 8 · форматы: горизонтальная лента карточек */
+  /* лента не вылезает за края карточки: видна следующая карточка внутри рамки, снизу точки и стрелки */
+  .rail { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; border-radius: 18px; scrollbar-width: none; }
+  .rail::-webkit-scrollbar { display: none; }
+  .fcard { all: unset; box-sizing: border-box; cursor: pointer; flex: 0 0 84%; scroll-snap-align: start; border-radius: 18px; overflow: hidden; position: relative; aspect-ratio: 4 / 5; }
+  .railnav { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .dots { display: flex; gap: 6px; } .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); transition: background 0.2s, width 0.2s; }
+  .dots i.on { width: 20px; border-radius: 4px; background: var(--pf-ball); }
+  .arrows { display: flex; gap: 6px; }
+  .arrows button { all: unset; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: rgba(246, 246, 246, 0.14); font-size: 16px; }
+  .arrows button:focus-visible { outline: 2px solid var(--pf-ball); }
+  /* фото-карточки на обложке, втором и последнем слайдах */
+  /* блок с фото занимает свободное место и ужимается на низких экранах, а не наезжает на текст */
+  .polas { position: relative; flex: 1 1 0; min-height: 90px; max-height: 260px; }
+  .pola { position: absolute; height: 86%; aspect-ratio: 3 / 4; max-width: 48%; border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 4px var(--milk), 0 18px 40px rgba(0, 0, 0, 0.35); }
+  .pola img { width: 100%; height: 100%; object-fit: cover; }
+  .pola small { position: absolute; left: 8px; bottom: 8px; font-family: var(--mono); font-size: 10.5px; font-weight: 600; background: var(--milk); color: var(--moss); padding: 3px 7px; border-radius: 6px; }
+  .reels3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; flex: 1 1 0; min-height: 80px; max-height: 250px; }
+  .reels3 figure { margin: 0; position: relative; height: 100%; border-radius: 12px; overflow: hidden; }
+  .reels3 img { width: 100%; height: 100%; object-fit: cover; }
+  .reels3 figcaption { position: absolute; left: 6px; bottom: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--milk); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6); }
+  .reels3 figcaption::before { content: "▶ "; font-size: 9px; }
+  .fcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .fcard .ov { position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px;
+    background: linear-gradient(180deg, rgba(1, 0, 32, 0) 35%, rgba(1, 0, 32, 0.92) 100%); }
+  .fcard b { font-size: 20px; font-weight: 600; line-height: 1.05; }
+  .fcard span { font-size: 13.5px; color: var(--milk-dim); }
+  .fcard .you { display: none; color: var(--pf-ball); font-weight: 600; }
+  .fcard[aria-pressed="true"] .ov { background: rgba(1, 0, 32, 0.9); }
+  .fcard[aria-pressed="true"] .you { display: block; }
+  .fcard[aria-pressed="true"] .gen { display: none; }
+
+  /* 9 · план на месяц */
+  .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .tab { all: unset; cursor: pointer; text-align: center; border-radius: 12px; padding: 10px 0; font-family: var(--mono); font-size: 12px; font-weight: 600; background: rgba(0, 0, 0, 0.2); color: var(--milk-dim); }
+  .tab[aria-selected="true"] { background: var(--milk); color: var(--moss); }
+  .wk { border-radius: 18px; background: var(--forest); padding: 18px; display: none; gap: 10px; }
+  .wk.on { display: grid; }
+  .wk h3 { margin: 0; font-family: "Golos Text", sans-serif; font-weight: 800; letter-spacing: -0.035em; font-size: 22px; line-height: 1.1; }
+  .wk h3 em { font-style: normal; color: #ff3b30; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { font-size: 13px; padding: 6px 10px; border-radius: 999px; background: rgba(246, 246, 246, 0.14); }
+  .goals { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .goals div { border-radius: 14px; padding: 10px 12px; box-shadow: inset 0 0 0 1px var(--line); }
+  .goals b { display: block; font-family: var(--serif); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; } .goals span { font-size: 12.5px; color: var(--milk-dim); }
+
+  /* 10 · демо-ролик */
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .board figure { margin: 0; display: grid; gap: 4px; }
+  .board img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 10px; }
+  .board figcaption { font-family: var(--mono); font-size: 10px; color: var(--milk-dim); }
+  /* плеер демо-ролика: вертикальный, как рилс, звук по нажатию */
+  .player { position: relative; flex: 1 1 0; min-height: 0; display: flex; justify-content: center; }
+  .player video { height: 100%; max-height: 100%; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 16px; object-fit: cover; background: #000; box-shadow: 0 0 0 3px var(--milk); }
+  .player button { all: unset; cursor: pointer; position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); padding: 7px 14px; border-radius: 999px;
+    background: rgba(1, 0, 32, 0.82); color: var(--milk); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; white-space: nowrap; }
+  .player button:focus-visible { outline: 2px solid var(--pf-ball); }
+  body.wide .vis .player { flex: none; height: min(560px, 66vh); }
+  .soon { border-radius: 14px; padding: 12px 14px; background: rgba(0, 0, 0, 0.2); font-size: 13.5px; color: var(--milk-dim); }
+
+  .end h1 { font-size: 44px; }
+  .sign { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--milk-dim); }
+  .credit { font-size: 11px; color: var(--milk-dim); opacity: 0.7; }
+
+  .nav { position: fixed; z-index: 30; bottom: max(14px, env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+  .nav button { all: unset; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--moss); color: var(--milk); font-size: 18px; }
+  .nav button:focus-visible { outline: 2px solid var(--pf-ball); }
+  /* стрелки живут под карточкой, а не поверх неё: снизу у сцены место под них */
+  @media (min-width: 700px) { .stage { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); } }
+  /* ПК: карточка становится широким слайдом, текст слева, визуал справа (обёртки .txt/.vis ставит скрипт) */
+  .txt, .vis { display: contents; }
+  body.wide .stage { padding-block: 14px; }
+  /* на ПК стрелки внутри карточки в шапке справа, ничего не перекрывают */
+  body.wide .nav { position: absolute; z-index: 25; top: 16px; right: 18px; bottom: auto; left: auto; transform: none; display: flex; }
+  body.wide .nav button { width: 34px; height: 34px; font-size: 15px; background: rgba(246, 246, 246, 0.14); }
+  body.wide .who small { margin-right: 96px; }
+  body.wide .deck { width: min(1200px, 100%); height: min(740px, 100%); border-radius: 24px; }
+  body.wide .slide { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 4vw, 56px); align-items: center; padding: clamp(64px, 12vh, 96px) clamp(28px, 4.5vw, 64px) clamp(18px, 4vh, 44px); }
+  body.wide .txt { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  body.wide .vis { display: flex; flex-direction: column; gap: 14px; min-width: 0; min-height: 0; max-height: 100%; justify-content: center; }
+  body.wide .push:empty { display: none; } body.wide .push { margin-top: 0; }
+  body.wide h1 { font-size: clamp(30px, 8vh, 62px); } body.wide h2 { font-size: clamp(24px, 6vh, 48px); } body.wide .sub { font-size: clamp(14px, 2.4vh, 18px); }
+  body.wide .txt { gap: clamp(8px, 2vh, 18px); } body.wide .vis { gap: clamp(8px, 1.6vh, 14px); }
+  body.wide .photo::after { background: linear-gradient(90deg, var(--moss) 0%, rgba(1, 0, 32, 0.86) 42%, rgba(1, 0, 32, 0.35) 100%); }
+  body.wide .vis .polas { flex: none; height: min(470px, 58vh); max-height: none; }
+  body.wide .vis .reels3 { flex: none; height: min(320px, 32vh); max-height: none; }
+  body.wide .vis .vs b { font-size: clamp(36px, 8vh, 64px); }
+  body.wide .vis .board img { max-height: 46vh; }
+  body.wide .vis .grid9 { max-height: 32vh; width: auto; aspect-ratio: 3 / 3.75; }
+  body.wide .vis .sw div { aspect-ratio: 2.4; }
+  body.wide .vis .chart svg { max-height: 40vh; }
+  body.wide .vis .fcard { max-height: 52vh; }
+  body.wide .soon, body.wide .vis .goals div { padding-block: 8px; }
+  body.wide .vis .goals b { font-size: clamp(16px, 3.6vh, 22px); }
+  body.wide .vis .grid9 { width: min(100%, 300px); align-self: center; }
+  body.wide .vis .sw div { aspect-ratio: 1.25; }
+  body.wide .vis .seg { align-self: center; }
+  body.wide .fcard { flex: 0 0 calc(50% - 5px); }
+  body.wide .board img { aspect-ratio: 9 / 15; }
+  body.wide .tap { top: 70px; width: 12%; }
+  @media (max-width: 699px) { .nav { display: none; } .deck { height: 100%; border-radius: 22px; } }
+  @media (prefers-reduced-motion: reduce) { .slide, .bars b, .meter i, .hint::after { transition: none; animation: none; } }
+  .vs b { font-size: min(50px, 10.5vw); white-space: nowrap; }
+  .acc .n { color: #fff; }
+  .meter i { width: 100%; } .on .meter i.go { width: 5.4%; }
+  .fcard img[src$=".png"] { object-fit: contain; background: #fff; }
+  .slide[data-i="8"] .photo img { object-fit: contain; object-position: 70% 30%; background: #000; }
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+
+
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="stage">
+  <div class="deck" id="deck" aria-roledescription="сторис" aria-label="X2Bike: Instagram и сайт">
+    <div class="bars" id="bars"></div>
+    <div class="who"><img src="img/avatar.png" alt="Логотип X2Bike"><span>x2bike.cz × Your Agency</span><small id="count">1 / 12</small></div>
+
+    <!-- 1 · обложка -->
+    <section class="slide on" data-i="0">
+      <div class="photo"><img src="img/cover.jpg" alt=""></div>
+      <div class="push"></div>
+      <h1>X2Bike, Прага и теперь <em>Варшава</em></h1>
+      <p class="sub">Мы посмотрели ваш Instagram и сайт. Кто ваш клиент, что поправить и план на первый месяц для двух городов.</p>
+      <div class="hint">Нажмите справа или свайпните</div>
+    </section>
+
+    <!-- 2 · число -->
+    <section class="slide" data-i="1">
+      <div class="photo"><img src="img/courier.jpg" alt=""></div>
+      <div class="eyebrow">Главное число</div>
+      <h2>Клиенты у вас уже есть. <em>Instagram</em> про них не знает</h2>
+      <div class="push"></div>
+      <div class="vs"><div><b>5 000+</b><span>райдеров, по данным сайта</span></div><div class="x">vs</div><div><b>268</b><span>подписчиков в Instagram</span></div></div>
+      <div class="meter"><i id="m1"></i></div>
+      <p class="sub">Каждый райдер может стать подписчиком, автором отзыва и тем, кто приведёт друга.</p>
+    </section>
+
+    <!-- 3 · график -->
+    <section class="slide" data-i="2">
+      <div class="eyebrow">Все 9 публикаций · @x2bike.cz</div>
+      <h2>Instagram уснул <em>в 2023</em></h2>
+      <div class="chart ui"><svg id="chart" viewBox="0 0 360 200" aria-label="Публикации по месяцам с октября 2023"></svg></div>
+      <div class="pick ui" id="pick" aria-live="polite"></div>
+      <p class="sub push">Нажмите на месяц. Последние посты про Dominator в августе, Варшавы в профиле пока нет.</p>
+    </section>
+
+    <!-- 4 · кто клиент -->
+    <section class="slide" data-i="3">
+      <div class="photo"><img src="img/bag.jpg" alt=""></div>
+      <div class="eyebrow">Кто ваш клиент · из отзывов на сайте</div>
+      <h2>Вы возите <em>тех, кто зарабатывает</em></h2>
+      <div class="push"></div>
+      <div class="acc ui">
+        <button aria-expanded="true"><span class="t">Курьер</span><span class="n">№1</span><span class="why">«Хорошая скорость очень важна для меня как курьера». Ему важны км, заряд и заработок.</span></button>
+        <button aria-expanded="false"><span class="t">Постоянный райдер</span><span class="n">часто</span><span class="why">«Беру велосипед здесь каждый раз». Подписка на неделю и месяц, а не прогулка.</span></button>
+        <button aria-expanded="false"><span class="t">Тот, у кого сломалось</span><span class="n">УТП</span><span class="why">Бесплатный ремонт входит в цену. Об этом можно снимать каждую неделю.</span></button>
+        <button aria-expanded="false"><span class="t">Бизнес и мероприятия</span><span class="n">B2B</span><span class="why">Ваш пост 2023: «Нужно много электровелосипедов? Мы найдём решение».</span></button>
+      </div>
+    </section>
+
+    <!-- 5 · мем -->
+    <section class="slide" data-i="4">
+      <div class="eyebrow">Если коротко</div>
+      <h2>Алгоритм думает <em>так же</em></h2>
+      <div class="meme">
+        <div class="face" role="img" aria-label="Отказывается"></div><div class="say no">«Czas ładowania baterii ok. 6 godz.»</div>
+        <div class="face yes" role="img" aria-label="Одобряет"></div><div class="say yes"><span>Курьер считает <em>заработок</em> за смену на X2</span></div>
+      </div>
+      <p class="sub push">Характеристики читают те, кто уже выбрал. Смену курьера смотрят те, кто ещё выбирает.</p>
+    </section>
+
+    <!-- 6 · что мешает: Instagram -->
+    <section class="slide" data-i="5">
+      <div class="eyebrow">Instagram · что мешает</div>
+      <h2>Три вещи, <em>нажмите</em> на каждую</h2>
+      <div class="chips ui">
+        <button class="chip" aria-pressed="false"><span class="k">Языки</span><span class="p">PL, RU и CZ вперемешку в одной ленте</span><span class="f">Ролики без слов + субтитры, подпись на 2 языках</span></button>
+        <button class="chip" aria-pressed="false"><span class="k">Города</span><span class="p">В шапке только Прага</span><span class="f">«Praha · Warszawa» в имени, хайлайты по городам</span></button>
+        <button class="chip" aria-pressed="false"><span class="k">Регулярность</span><span class="p">9 постов за 3 года</span><span class="f">3 рилса в неделю по рубрикам, снимаем сами</span></button>
+      </div>
+      <div class="push"></div>
+    </section>
+
+    <!-- 7 · их цвета -->
+    <section class="slide" data-i="6">
+      <div class="eyebrow">Ваши цвета · с сайта</div>
+      <h2>Что мы видим <em>у вас</em></h2>
+      <div class="sw">
+        <div style="background: #010020"><b>Ночь</b><span>#010020</span></div>
+        <div style="background: #ce1212"><b>Красный</b><span>#CE1212</span></div>
+        <div style="background: #f6f6f6; color: #010020"><b>Светлый</b><span>#F6F6F6</span></div>
+        <div style="background: #ffffff; color: #010020"><b>Белый</b><span>#FFFFFF</span></div>
+      </div>
+      <div class="seg ui" role="group" aria-label="Сетка профиля"><button id="gNow" aria-pressed="false">Сейчас</button><button id="gNew" aria-pressed="true">В едином стиле</button></div>
+      <div class="grid9 ui" id="grid9"></div>
+      <p class="sub">Тёмный синий, красная «2» из логотипа и ваши байки на чёрном. Из этого соберём сетку.</p>
+    </section>
+
+    <!-- 8 · рубрики -->
+    <section class="slide" data-i="7">
+      <div class="eyebrow">Рубрики под ваших клиентов</div>
+      <h2>Листайте и <em>нажимайте</em></h2>
+      <div class="rail ui" id="rail">
+        <button class="fcard" aria-pressed="false"><img src="img/courier.jpg" alt=""><span class="ov"><b>Смена на X2</b><span class="gen">POV курьера: км, заказы, заряд, заработок</span><span class="you">У вас: курьеры, главный клиент</span></span></button>
+        <button class="fcard" aria-pressed="false"><img src="img/repair.jpg" alt=""><span class="ov"><b>Механик за 30 секунд</b><span class="gen">Одна поломка, одно решение</span><span class="you">У вас: бесплатный ремонт в цене</span></span></button>
+        <button class="fcard" aria-pressed="false"><img src="img/bike7.png" alt=""><span class="ov"><b>Байк недели</b><span class="gen">Один байк, три цифры, один тест</span><span class="you">У вас: 8 моделей, Dominator до 130 км</span></span></button>
+        <button class="fcard" aria-pressed="false"><img src="img/start.jpg" alt=""><span class="ov"><b>15 минут до старта</b><span class="gen">От двери до выезда одним дублем</span><span class="you">У вас: обещание с сайта</span></span></button>
+        <button class="fcard" aria-pressed="false"><img src="img/city.jpg" alt=""><span class="ov"><b>Прага ↔ Варшава</b><span class="gen">Один формат, два города</span><span class="you">У вас: Vršovice, Dominikańska, Wola</span></span></button>
+        <button class="fcard" aria-pressed="false"><img src="img/ride.jpg" alt=""><span class="ov"><b>Отзыв в шлеме</b><span class="gen">Райдер за 10 секунд, без студии</span><span class="you">У вас: 5 000+ райдеров и 14 отзывов</span></span></button>
+      </div>
+      <div class="railnav ui"><div class="dots" id="dots"></div><div class="arrows"><button id="rPrev" aria-label="Предыдущая рубрика">←</button><button id="rNext" aria-label="Следующая рубрика">→</button></div></div>
+      <p class="sub push">Нажмите на карточку, чтобы увидеть, как рубрика ложится на X2Bike.</p>
+    </section>
+
+    <!-- 9 · сайт -->
+    <section class="slide" data-i="8">
+      <div class="photo"><img src="img/bike1.png" alt=""></div>
+      <div class="eyebrow">Сайт x2bike.cz · что поправить</div>
+      <h2>Сайт хороший. <em>Три правки</em></h2>
+      <div class="push"></div>
+      <div class="chips ui">
+        <button class="chip" aria-pressed="false"><span class="k">Варшава</span><span class="p">Только в контактах, внизу страницы</span><span class="f">«Praha · Warszawa» на первом экране и выбор города</span></button>
+        <button class="chip" aria-pressed="false"><span class="k">Поиск</span><span class="p">Заголовок: «Аренда электровелосипедов в Праге»</span><span class="f">Отдельные страницы и заголовки для Варшавы</span></button>
+        <button class="chip" aria-pressed="false"><span class="k">Соцсети</span><span class="p">Instagram и Telegram только в подвале</span><span class="f">Кнопки в шапке и под тарифами, рилсы на сайте</span></button>
+      </div>
+    </section>
+
+    <!-- 10 · план на месяц -->
+    <section class="slide" data-i="9">
+      <div class="eyebrow">План на первый месяц</div>
+      <h2>Четыре недели, <em>два города</em></h2>
+      <div class="tabs ui" role="tablist">
+        <button class="tab" role="tab" aria-selected="true" data-w="0">Нед. 1</button><button class="tab" role="tab" aria-selected="false" data-w="1">Нед. 2</button>
+        <button class="tab" role="tab" aria-selected="false" data-w="2">Нед. 3</button><button class="tab" role="tab" aria-selected="false" data-w="3">Нед. 4</button>
+      </div>
+      <div class="wk on ui"><h3>Упаковка <em>профиля</em></h3><div class="tags"><span>Praha · Warszawa в шапке</span><span>био RU / PL / EN</span><span>хайлайты: тарифы, ремонт, Варшава</span><span>3 закрепа</span></div></div>
+      <div class="wk ui"><h3>Запуск <em>рубрик</em></h3><div class="tags"><span>Смена на X2</span><span>Механик за 30 секунд</span><span>Байк недели</span></div></div>
+      <div class="wk ui"><h3>Неделя <em>Варшавы</em></h3><div class="tags"><span>открытие точки</span><span>Прага ↔ Варшава</span><span>первые райдеры</span></div></div>
+      <div class="wk ui"><h3>Сайт и <em>отзывы</em></h3><div class="tags"><span>кнопки соцсетей в шапке</span><span>Варшава на главной</span><span>отзывы в шлеме</span><span>разбор месяца</span></div></div>
+      <div class="goals push"><div><b>12</b><span>рилсов за месяц (за 3 года было 9 постов)</span></div><div><b>2</b><span>города в одной ленте</span></div><div><b>3</b><span>рубрики</span></div><div><b>1</b><span>путь: рилс → тариф → байк</span></div></div>
+    </section>
+
+    <!-- 11 · демо -->
+    <section class="slide" data-i="10">
+      <div class="eyebrow">Демо-ролик · 15 секунд</div>
+      <h2>«X2 <em>Speed</em>»</h2>
+      <div class="player ui">
+        <video id="demo" src="video/demo.mp4" poster="video/demo_poster.jpg" muted loop playsinline preload="metadata"></video>
+        <button id="snd" aria-label="Включить звук">🔇 нажмите для звука</button>
+      </div>
+      <p class="sub">Ваши байки и цены с сайта в моушн-дизайне, город и курьеры в бит, два города в финале.</p>
+      <div class="soon push">Демо: фото байков с вашего сайта и открытые стоки. На вашем аккаунте снимем ваших райдеров и точки.</div>
+    </section>
+
+    <!-- 12 · финал -->
+    <section class="slide end" data-i="11">
+      <div class="photo"><img src="img/team.jpg" alt=""></div>
+      <div class="push"></div>
+      <div class="eyebrow">Что дальше</div>
+      <h1>Начнём с <em>одного</em> ролика на ваших байках?</h1>
+      <p class="sub">Аналитика, сценарии, съёмка, моушн, UGC и ведение. Одна команда на Прагу и Варшаву.</p>
+      <div class="sign">Your Agency · Прага</div>
+      <div class="credit">Иллюстративные фото: Pexels, x2bike.cz и сгенерированные</div>
+    </section>
+
+    <div class="tap prev" id="tPrev" aria-hidden="true"></div>
+    <div class="tap next" id="tNext" aria-hidden="true"></div>
+  </div>
+</div>
+<div class="nav"><button id="bPrev" aria-label="Назад">←</button><button id="bNext" aria-label="Дальше">→</button></div>
+
+<script>
+  const slides = [...document.querySelectorAll(".slide")], N = slides.length;
+  const bars = document.getElementById("bars"), count = document.getElementById("count");
+  bars.innerHTML = slides.map(() => "<span><b></b></span>").join("");
+  let cur = 0;
+  function show(i) {
+    cur = Math.max(0, Math.min(N - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("on", k === cur));
+    [...bars.children].forEach((b, k) => b.classList.toggle("done", k <= cur));
+    count.textContent = (cur + 1) + " / " + N;
+    if (typeof syncDemo === "function") syncDemo();
+    if (cur === 1) { const m = document.getElementById("m1"); m.classList.remove("go"); requestAnimationFrame(() => setTimeout(() => m.classList.add("go"), 250)); }
+  }
+  // демо-ролик играет без звука, пока открыт его слайд; звук по нажатию
+  const demo = document.getElementById("demo"), snd = document.getElementById("snd");
+  function syncDemo() { if (cur === 10) { demo.play().catch(() => {}); } else { demo.pause(); } }
+  snd.addEventListener("click", (e) => { e.stopPropagation(); demo.muted = !demo.muted; if (!demo.muted) { demo.currentTime = 0; demo.play().catch(() => {}); }
+    snd.textContent = demo.muted ? "🔇 нажмите для звука" : "🔊 звук включён"; });
+  demo.addEventListener("click", (e) => { e.stopPropagation(); demo.paused ? demo.play() : demo.pause(); });
+  const next = () => show(cur + 1), prev = () => show(cur - 1);
+  document.getElementById("tNext").onclick = next; document.getElementById("tPrev").onclick = prev;
+  document.getElementById("bNext").onclick = next; document.getElementById("bPrev").onclick = prev;
+  addEventListener("keydown", (e) => { if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev(); });
+  // свайп
+  let sx = null; const deck = document.getElementById("deck");
+  deck.addEventListener("pointerdown", (e) => { if (!e.target.closest(".rail")) sx = e.clientX; });
+  deck.addEventListener("pointerup", (e) => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) (dx < 0 ? next : prev)(); });
+
+  // 3 · график: 25 рилсов по порядку, тап по столбику показывает ролик
+  const R = [[6, "Squidward, запас хода, зарядка, чип-тюнинг, ивенты", "окт 2023"], [0, "Нет публикаций", "ноя 2023"], [0, "Нет публикаций", "дек 2023"], [0, "Нет публикаций", "янв 2024"], [0, "Нет публикаций", "фев 2024"], [0, "Нет публикаций", "мар 2024"], [0, "Нет публикаций", "апр 2024"], [0, "Нет публикаций", "май 2024"], [0, "Нет публикаций", "июн 2024"], [0, "Нет публикаций", "июл 2024"], [1, "«Х2 комфорт, Х2 заработок, Х2 удовольствие»", "авг 2024"], [0, "Нет публикаций", "сен 2024"], [0, "Нет публикаций", "окт 2024"], [0, "Нет публикаций", "ноя 2024"], [0, "Нет публикаций", "дек 2024"], [0, "Нет публикаций", "янв 2025"], [0, "Нет публикаций", "фев 2025"], [0, "Нет публикаций", "мар 2025"], [0, "Нет публикаций", "апр 2025"], [0, "Нет публикаций", "май 2025"], [0, "Нет публикаций", "июн 2025"], [0, "Нет публикаций", "июл 2025"], [0, "Нет публикаций", "авг 2025"], [0, "Нет публикаций", "сен 2025"], [0, "Нет публикаций", "окт 2025"], [0, "Нет публикаций", "ноя 2025"], [0, "Нет публикаций", "дек 2025"], [0, "Нет публикаций", "янв 2026"], [0, "Нет публикаций", "фев 2026"], [0, "Нет публикаций", "мар 2026"], [0, "Нет публикаций", "апр 2026"], [0, "Нет публикаций", "май 2026"], [0, "Нет публикаций", "июн 2026"], [0, "Нет публикаций", "июл 2026"], [2, "Dominator: «до 130 км реального пробега»", "авг 2026"], [0, "Нет публикаций", "сен 2026"], [0, "Нет публикаций", "окт 2026"], [0, "Нет публикаций", "ноя 2026"]];
+  const MED = 1, svg = document.getElementById("chart"), pick = document.getElementById("pick"), ns = "http://www.w3.org/2000/svg";
+  const W = 360, H = 200, L = 6, Rt = 6, T = 10, B = 18, MAX = 6.4, bw = (W - L - Rt) / R.length, y = (v) => T + (H - T - B) * (1 - v / MAX);
+  const mk = (n, a) => { const e = document.createElementNS(ns, n); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  const fmt = (v) => v.toLocaleString("ru-RU").replace(/ /g, " ");
+  const rects = R.map(([v], i) => {
+    const r = mk("rect", { class: "bar", x: L + i * bw + bw * 0.16, y: y(Math.max(v, MAX * 0.015)), width: bw * 0.68, height: y(0) - y(Math.max(v, MAX * 0.015)), rx: 2.5, fill: v >= MED * 2 ? "#ff3b30" : "#5c5b85" });
+    r.addEventListener("click", (e) => { e.stopPropagation(); select(i); });
+    return r;
+  });
+  
+  [["янв 24", 3], ["янв 25", 15], ["янв 26", 27]].forEach(([t, i]) => { const e = mk("text", { x: L + i * bw + bw / 2, y: H - 4, "text-anchor": "middle", "font-size": 9, fill: "#f6f6f6", opacity: 0.6, "font-family": "JetBrains Mono, monospace" }); e.textContent = t; });
+  function select(i) {
+    rects.forEach((r, k) => r.style.opacity = k === i ? 1 : 0.45);
+    const [v, name, d] = R[i], m = (v / MED).toFixed(1).replace(".", ",");
+    pick.innerHTML = `<span class="m">${d}</span><b>${name}</b><span>${v} ${v === 1 ? "публикация" : v > 1 && v < 5 ? "публикации" : "публикаций"}</span>`;
+  }
+  select(34);
+
+  // 4 · раскрывающиеся строки
+  document.querySelectorAll(".acc button").forEach((b) => b.addEventListener("click", (e) => {
+    e.stopPropagation(); document.querySelectorAll(".acc button").forEach((x) => x.setAttribute("aria-expanded", String(x === b)));
+  }));
+  // 6 · флип-карточки
+  document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", (e) => { e.stopPropagation(); c.setAttribute("aria-pressed", String(c.getAttribute("aria-pressed") !== "true")); }));
+  // 8 · форматы
+  document.querySelectorAll(".fcard").forEach((c) => c.addEventListener("click", (e) => { e.stopPropagation(); c.setAttribute("aria-pressed", String(c.getAttribute("aria-pressed") !== "true")); }));
+  // 8 · лента форматов: точки и стрелки показывают, что её можно листать
+  const rail = document.getElementById("rail"), cards = [...rail.children], dots = document.getElementById("dots");
+  dots.innerHTML = cards.map(() => "<i></i>").join("");
+  const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
+  const sync = () => { const k = Math.round(rail.scrollLeft / step()); [...dots.children].forEach((d, i) => d.classList.toggle("on", i === k)); };
+  rail.addEventListener("scroll", sync, { passive: true }); sync();
+  document.getElementById("rNext").onclick = (e) => { e.stopPropagation(); rail.scrollBy({ left: step() }); };
+  document.getElementById("rPrev").onclick = (e) => { e.stopPropagation(); rail.scrollBy({ left: -step() }); };
+  // 9 · недели
+  const tabs = [...document.querySelectorAll(".tab")], wks = [...document.querySelectorAll(".wk")];
+  tabs.forEach((t) => t.addEventListener("click", (e) => { e.stopPropagation(); const w = +t.dataset.w;
+    tabs.forEach((x, k) => x.setAttribute("aria-selected", String(k === w))); wks.forEach((x, k) => x.classList.toggle("on", k === w)); }));
+
+  // 7 · сетка профиля: «сейчас» (разнобой) против «в едином стиле»
+  const g9 = document.getElementById("grid9");
+  const NOW = [["#e9b44c", "Squidward", "#1d1d1d"], ["#a08474", "", ""], ["#d8b5b0", "", ""], ["#111111", "DOMINATOR", "#ffffff"], ["#262626", "Властвуй, доминируй!", "#ce1212"],
+    ["#ffffff", "Zasięg 100km", "#111"], ["#ececec", "Czas ładowania 6 h", "#333"], ["#c9c9c9", "Chip tuning", "#b00"], ["#3b5998", "Мероприятие?", "#fff"]];
+  const NOWF = ["Impact, sans-serif", "Georgia, serif", "Comic Sans MS, cursive"];
+  const NEW = ["img/courier.jpg", "", "img/bike7.png", "", "img/repair.jpg", "", "img/ride.jpg", "", "img/city.jpg"];
+  const NEWTXT = ["", "Смена на X2", "", "Байк недели", "", "Механик за 30 с", "", "Praha · Warszawa", ""];
+  const NEWBG = ["", "#ce1212", "", "#010020", "", "#ffffff", "", "#010020", ""], NEWFG = ["", "#ffffff", "", "#ffffff", "", "#010020", "", "#ffffff", ""];
+  for (let k = 0; k < 9; k++) g9.appendChild(Object.assign(document.createElement("div"), { innerHTML: "<span></span>" }));
+  function grid(mode) {
+    [...g9.children].forEach((c, k) => {
+      const s = c.firstChild;
+      if (mode === "now") { c.style.backgroundImage = "none"; c.style.background = NOW[k][0]; s.textContent = NOW[k][1]; s.style.color = NOW[k][2]; s.style.fontFamily = NOWF[k % NOWF.length]; }
+      else { c.style.background = NEW[k] ? `center / cover no-repeat url(${NEW[k]})` : NEWBG[k]; s.textContent = NEWTXT[k]; s.style.color = NEWFG[k]; s.style.fontFamily = "var(--serif)"; }
+    });
+    document.getElementById("gNow").setAttribute("aria-pressed", String(mode === "now"));
+    document.getElementById("gNew").setAttribute("aria-pressed", String(mode !== "now"));
+  }
+  document.getElementById("gNow").onclick = (e) => { e.stopPropagation(); grid("now"); };
+  document.getElementById("gNew").onclick = (e) => { e.stopPropagation(); grid("new"); };
+  grid("new");
+
+  // интерактивные элементы не листают сторис
+  document.querySelectorAll(".ui").forEach((u) => u.addEventListener("pointerup", (e) => e.stopPropagation()));
+  // ПК: раскладываем каждый слайд на текст (слева) и визуал (справа); на телефоне исходный порядок
+  const TXT = ".eyebrow, h1, h2, .sub, .hint, .sign, .credit";
+  const orig = slides.map((sl) => [...sl.children]);
+  const wideMQ = matchMedia("(min-width: 900px) and (min-aspect-ratio: 1/1)");   // любое горизонтальное окно ПК, даже низкое
+  function layout() {
+    const wide = wideMQ.matches;
+    document.body.classList.toggle("wide", wide);
+    slides.forEach((sl, k) => {
+      if (wide && !sl.querySelector(":scope > .txt")) {
+        const t = document.createElement("div"), v = document.createElement("div"); t.className = "txt"; v.className = "vis";
+        orig[k].forEach((el) => { if (el.classList.contains("photo")) return; (el.matches(TXT) ? t : v).appendChild(el); });
+        sl.append(t, v);
+      } else if (!wide && sl.querySelector(":scope > .txt")) {
+        sl.querySelectorAll(":scope > .txt, :scope > .vis").forEach((w) => w.remove());
+        orig[k].forEach((el) => sl.appendChild(el));
+      }
+    });
+  }
+  const navEl = document.querySelector(".nav"), deckEl = document.getElementById("deck");
+  const placeNav = () => (wideMQ.matches ? deckEl.appendChild(navEl) : document.body.appendChild(navEl));
+  layout(); placeNav(); wideMQ.addEventListener("change", () => { layout(); placeNav(); });
+  // ссылка на конкретную карточку: #s3 и т.п.
+  const h = location.hash.match(/^#s(\d+)$/); show(h ? +h[1] - 1 : 0);
+</script>
+
+</body>
+</html>
