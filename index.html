@@ -224,13 +224,22 @@
   body.wide .fcard { flex: 0 0 calc(50% - 5px); }
   body.wide .board img { aspect-ratio: 9 / 15; }
   body.wide .tap { top: 70px; width: 12%; }
-  @media (max-width: 699px) { .nav { display: none; } .deck { height: 100%; border-radius: 22px; } }
+  @media (max-width: 699px) {  .deck { height: 100%; border-radius: 22px; } }
   @media (prefers-reduced-motion: reduce) { .slide, .bars b, .meter i, .hint::after { transition: none; animation: none; } }
   .vs b { font-size: min(50px, 10.5vw); white-space: nowrap; }
   .acc .n { color: #fff; }
   .meter i { width: 100%; } .on .meter i.go { width: 5.4%; }
   .fcard img[src$=".png"] { object-fit: contain; background: #fff; }
   .slide[data-i="8"] .photo img { object-fit: contain; object-position: 70% 30%; background: #000; }
+
+  /* навигация: автопролист с полоской как в сторис, кнопки внизу на телефоне, без невидимых зон тапа */
+  .tap { display: none !important; }
+  .bars span.cur b { transition: none; }
+  @media (max-width: 699px) {
+    .nav { display: flex !important; position: fixed; bottom: max(18px, env(safe-area-inset-bottom, 0px)); left: 50%; right: auto; transform: translateX(-50%); gap: 14px; }
+    .nav button { width: 40px; height: 40px; font-size: 17px; background: var(--moss); color: var(--milk); box-shadow: 0 0 0 1px var(--line), 0 6px 18px rgba(0, 0, 0, 0.35); }
+    .slide { padding-bottom: 72px; }
+  }
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%}</style>
 </head>
@@ -393,8 +402,6 @@
       <div class="credit">Иллюстративные фото: Pexels, x2bike.cz и сгенерированные</div>
     </section>
 
-    <div class="tap prev" id="tPrev" aria-hidden="true"></div>
-    <div class="tap next" id="tNext" aria-hidden="true"></div>
   </div>
 </div>
 <div class="nav"><button id="bPrev" aria-label="Назад">←</button><button id="bNext" aria-label="Дальше">→</button></div>
@@ -407,7 +414,7 @@
   function show(i) {
     cur = Math.max(0, Math.min(N - 1, i));
     slides.forEach((s, k) => s.classList.toggle("on", k === cur));
-    [...bars.children].forEach((b, k) => b.classList.toggle("done", k <= cur));
+    if (typeof setBar === "function") setBar();
     count.textContent = (cur + 1) + " / " + N;
     if (typeof syncDemo === "function") syncDemo();
     if (cur === 1) { const m = document.getElementById("m1"); m.classList.remove("go"); requestAnimationFrame(() => setTimeout(() => m.classList.add("go"), 250)); }
@@ -419,13 +426,13 @@
     snd.textContent = demo.muted ? "🔇 нажмите для звука" : "🔊 звук включён"; });
   demo.addEventListener("click", (e) => { e.stopPropagation(); demo.paused ? demo.play() : demo.pause(); });
   const next = () => show(cur + 1), prev = () => show(cur - 1);
-  document.getElementById("tNext").onclick = next; document.getElementById("tPrev").onclick = prev;
+  
   document.getElementById("bNext").onclick = next; document.getElementById("bPrev").onclick = prev;
   addEventListener("keydown", (e) => { if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev(); });
   // свайп
-  let sx = null; const deck = document.getElementById("deck");
-  deck.addEventListener("pointerdown", (e) => { if (!e.target.closest(".rail")) sx = e.clientX; });
-  deck.addEventListener("pointerup", (e) => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) (dx < 0 ? next : prev)(); });
+  let sx = null, sy = null; const deck = document.getElementById("deck");
+  deck.addEventListener("pointerdown", (e) => { if (!e.target.closest(".rail")) { sx = e.clientX; sy = e.clientY; } });
+  deck.addEventListener("pointerup", (e) => { if (sx === null) return; const dx = e.clientX - sx, dy = e.clientY - sy; sx = null; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) (dx < 0 ? next : prev)(); });
 
   // 3 · график: 25 рилсов по порядку, тап по столбику показывает ролик
   const R = [[6, "Squidward, запас хода, зарядка, чип-тюнинг, ивенты", "окт 2023"], [0, "Нет публикаций", "ноя 2023"], [0, "Нет публикаций", "дек 2023"], [0, "Нет публикаций", "янв 2024"], [0, "Нет публикаций", "фев 2024"], [0, "Нет публикаций", "мар 2024"], [0, "Нет публикаций", "апр 2024"], [0, "Нет публикаций", "май 2024"], [0, "Нет публикаций", "июн 2024"], [0, "Нет публикаций", "июл 2024"], [1, "«Х2 комфорт, Х2 заработок, Х2 удовольствие»", "авг 2024"], [0, "Нет публикаций", "сен 2024"], [0, "Нет публикаций", "окт 2024"], [0, "Нет публикаций", "ноя 2024"], [0, "Нет публикаций", "дек 2024"], [0, "Нет публикаций", "янв 2025"], [0, "Нет публикаций", "фев 2025"], [0, "Нет публикаций", "мар 2025"], [0, "Нет публикаций", "апр 2025"], [0, "Нет публикаций", "май 2025"], [0, "Нет публикаций", "июн 2025"], [0, "Нет публикаций", "июл 2025"], [0, "Нет публикаций", "авг 2025"], [0, "Нет публикаций", "сен 2025"], [0, "Нет публикаций", "окт 2025"], [0, "Нет публикаций", "ноя 2025"], [0, "Нет публикаций", "дек 2025"], [0, "Нет публикаций", "янв 2026"], [0, "Нет публикаций", "фев 2026"], [0, "Нет публикаций", "мар 2026"], [0, "Нет публикаций", "апр 2026"], [0, "Нет публикаций", "май 2026"], [0, "Нет публикаций", "июн 2026"], [0, "Нет публикаций", "июл 2026"], [2, "Dominator: «до 130 км реального пробега»", "авг 2026"], [0, "Нет публикаций", "сен 2026"], [0, "Нет публикаций", "окт 2026"], [0, "Нет публикаций", "ноя 2026"]];
@@ -513,6 +520,35 @@
   const navEl = document.querySelector(".nav"), deckEl = document.getElementById("deck");
   const placeNav = () => (wideMQ.matches ? deckEl.appendChild(navEl) : document.body.appendChild(navEl));
   layout(); placeNav(); wideMQ.addEventListener("change", () => { layout(); placeNav(); });
+
+  // автопролист: время на карточку зависит от текста; пауза при удержании пальца и 10 с после нажатия на интерактив
+  const deckNode = document.getElementById("deck");
+  let holding = false;
+  function slideDur(sl) {
+    if (sl.querySelector("video")) return 16;
+    const words = (sl.innerText || "").split(/\s+/).filter(Boolean).length;
+    return Math.min(14, Math.max(5, 2.5 + words * 0.22));
+  }
+  let elapsed = 0, need = 6, lastT = performance.now();
+  function setBar() {
+    [...bars.children].forEach((b, k) => { b.classList.toggle("done", k < cur); b.classList.remove("cur"); b.firstChild.style.width = ""; });
+    bars.children[cur].classList.add("cur");
+    elapsed = 0; need = slideDur(slides[cur]);
+    bars.children[cur].firstChild.style.width = cur === N - 1 ? "100%" : "0%";
+  }
+  setInterval(() => {
+    const now = performance.now(), dt = (now - lastT) / 1000; lastT = now;
+    if (cur === N - 1 || deckNode.classList.contains("paused")) return;
+    elapsed += dt; bars.children[cur].firstChild.style.width = Math.min(100, elapsed / need * 100) + "%";
+    if (elapsed >= need) next();
+  }, 100);
+  let uiUntil = 0;
+  const syncPause = () => deckNode.classList.toggle("paused", holding || Date.now() < uiUntil || document.hidden);
+  document.querySelectorAll(".ui").forEach((u) => u.addEventListener("pointerdown", () => { uiUntil = Date.now() + 10000; setTimeout(syncPause, 10050); }));
+  deckNode.addEventListener("pointerdown", () => { holding = true; syncPause(); });
+  addEventListener("pointerup", () => { holding = false; syncPause(); }, true);
+  addEventListener("pointercancel", () => { holding = false; syncPause(); }, true);
+  document.addEventListener("visibilitychange", syncPause);
   // ссылка на конкретную карточку: #s3 и т.п.
   const h = location.hash.match(/^#s(\d+)$/); show(h ? +h[1] - 1 : 0);
 </script>
